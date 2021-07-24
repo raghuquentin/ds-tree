@@ -18,6 +18,7 @@ public class BSTMain {
         System.out.println("max :: "+impl.getMax());
         System.out.println("min :: "+impl.getMin());
         impl.traversel();
-        impl.delete(new Employee(17,"James","Bond"));
+        impl.delete(new Employee(30,"James","Bond"));
+        impl.traversel();
     }
 }

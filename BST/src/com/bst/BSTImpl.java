@@ -54,13 +54,15 @@ public class BSTImpl implements BSTTree<Employee>{
     public void traversel(){
         preOrderTraversel(rootNode);
         postorderTraversel(rootNode);
+        System.out.println("=====INORDER=========");
         inOrderTraversel(rootNode);
+        System.out.println("=====INRDER============");
     }
 
     private void inOrderTraversel(BSTNode<Employee> node) {
         if(node == null) return;
         inOrderTraversel(node.getLeftChild());
-        System.out.println(node.getData().getEmployeeId());
+        System.out.print(node.getData().getEmployeeId()+",");
         inOrderTraversel(node.getRightChild());
     }
 
@@ -97,14 +99,19 @@ public class BSTImpl implements BSTTree<Employee>{
             else if(node.getRightChild() ==null)
                 node = node.getLeftChild();
             else if(node.getLeftChild() !=null && node.getRightChild() !=null) {
-                BSTNode<Employee> maxNode = findMax(node.getLeftChild());
+                BSTNode<Employee> minNode = findMin(node.getRightChild());
+                node.setData(minNode.getData());
+                node.setRightChild(deleteNode(minNode.getRightChild(),minNode.getData()));
             }
         }
         return node;
     }
 
-    private BSTNode<Employee> findMax(BSTNode<Employee> leftChild) {
-        return null;
+    private BSTNode<Employee> findMin(BSTNode<Employee> node) {
+       while(node.getLeftChild() != null)
+           node = node.getLeftChild();
+
+        return node;
     }
 
 
