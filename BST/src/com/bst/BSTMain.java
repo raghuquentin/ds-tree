@@ -18,7 +18,8 @@ public class BSTMain {
         System.out.println("max :: "+impl.getMax());
         System.out.println("min :: "+impl.getMin());
         impl.traversel();
-        impl.delete(new Employee(30,"James","Bond"));
+        //impl.delete(new Employee(29,"James","Bond")); //leaf node deletion
+        impl.delete(new Employee(25,"James","Bond")); // node with two children deletion
         impl.traversel();
     }
 }

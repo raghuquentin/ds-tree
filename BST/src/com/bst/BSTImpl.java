@@ -86,28 +86,35 @@ public class BSTImpl implements BSTTree<Employee>{
 
     private BSTNode<Employee> deleteNode(BSTNode<Employee> node, Employee e) {
         if(node == null) return node;
+
         if(e.getEmployeeId() < node.getData().getEmployeeId())
             node.setLeftChild(deleteNode(node.getLeftChild(),e));
         else if(e.getEmployeeId() > node.getData().getEmployeeId())
             node.setRightChild(deleteNode(node.getRightChild(),e));
         else
         {
+            //case 1 : leaf node deletion
             if(node.getLeftChild() == null && node.getRightChild() == null)
                 node = null;
+            //case 2 : node with one child
             else if(node.getLeftChild()==null)
                 node = node.getRightChild();
-            else if(node.getRightChild() ==null)
+             else if(node.getRightChild() ==null)
                 node = node.getLeftChild();
+             //case 3 : node with two children
             else if(node.getLeftChild() !=null && node.getRightChild() !=null) {
+                //find minimum node in the right subtree for replacement
                 BSTNode<Employee> minNode = findMin(node.getRightChild());
+                //exactly, we are not swap the node, only swap or changing the value
                 node.setData(minNode.getData());
-                node.setRightChild(deleteNode(minNode.getRightChild(),minNode.getData()));
+                //delete the min node we found above
+                node.setRightChild(deleteNode(node.getRightChild(),node.getData()));
             }
         }
         return node;
     }
 
-    private BSTNode<Employee> findMin(BSTNode<Employee> node) {
+    private BSTNode<Employee>  findMin(BSTNode<Employee> node) {
        while(node.getLeftChild() != null)
            node = node.getLeftChild();
 
