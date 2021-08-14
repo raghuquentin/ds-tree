@@ -1,5 +1,5 @@
 package com.bst;
 
 public interface BSTTree<T> {
-    public void add(T e);
+    void add(T e);
 }
