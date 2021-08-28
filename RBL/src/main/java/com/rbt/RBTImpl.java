@@ -1,25 +1,25 @@
 package com.rbt;
 
-public class RBTImpl<T extends Comparable> {
-    private RBTNode<T> rootNode;
+public class RBTImpl<Integer extends Comparable> {
+    private RBTNode<Integer> rootNode;
 
-    public void insert(T data){
+    public void insert(Integer data){
         if(rootNode == null) {
-            rootNode = new RBTNode<T>(data, null);
-            settleViolation(rootNode);
+            rootNode = new RBTNode<Integer>(data, null);
+            rootNode.setColor(NodeColor.BLACK);
         }
         else
             insertNode(rootNode,data);
     }
 
-    private RBTNode<T> insertNode(RBTNode<T> node, T data) {
+    private RBTNode<Integer> insertNode(RBTNode<Integer> node, Integer data) {
         if(node == null) return node;
 
          if(node.getData().compareTo(data) >0){
              if(node.getLeftChild() !=null)
                     insertNode(node.getLeftChild(),data);
              else{
-                 RBTNode<T> newNode = new RBTNode<T>(data,node);
+                 RBTNode<Integer> newNode = new RBTNode<Integer>(data,node);
                  node.setLeftChild(newNode);
                  settleViolation(newNode);
              }
@@ -27,7 +27,7 @@ public class RBTImpl<T extends Comparable> {
              if(node.getRightChild()!=null)
                  insertNode(node.getRightChild(),data);
              else{
-                 RBTNode<T> newNode = new RBTNode<T>(data,node);
+                 RBTNode<Integer> newNode = new RBTNode<Integer>(data,node);
                  node.setRightChild(newNode);
                  settleViolation(newNode);
              }
@@ -36,16 +36,17 @@ public class RBTImpl<T extends Comparable> {
          return node;
     }
 
-    public void settleViolation(RBTNode<T> node){
-        RBTNode<T> parentNode = null;
-        RBTNode<T> grandParentNode = null;
+    public void settleViolation(RBTNode<Integer> node){
+        RBTNode<Integer> parentNode = null;
+        RBTNode<Integer> grandParentNode = null;
 
         while( node != rootNode && isRed(node) && isRed(node.getParentNode())){
             parentNode = node.getParentNode();
             grandParentNode = parentNode.getParentNode();
-
+            if(grandParentNode == null)
+                return;
             if(parentNode == grandParentNode.getLeftChild() ){
-                RBTNode<T> uncle = grandParentNode.getRightChild();
+                RBTNode<Integer> uncle = grandParentNode.getRightChild();
                 if(uncle != null && isRed(uncle)){
                     parentNode.setColor(NodeColor.BLACK);
                     uncle.setColor(NodeColor.BLACK);
@@ -64,7 +65,7 @@ public class RBTImpl<T extends Comparable> {
                 }
             }else
             if(parentNode ==grandParentNode.getRightChild() ){
-                RBTNode<T> uncle = grandParentNode.getLeftChild();
+                RBTNode<Integer> uncle = grandParentNode.getLeftChild();
                 if(uncle != null && isRed(uncle)){
                     parentNode.setColor(NodeColor.BLACK);
                     uncle.setColor(NodeColor.BLACK);
@@ -91,7 +92,7 @@ public class RBTImpl<T extends Comparable> {
      * @return boolean
      * return true when the node color is red
      */
-    private Boolean isRed(RBTNode<T> node){
+    private Boolean isRed(RBTNode<Integer> node){
         //in RBT null consider as BLACK node, so we return false
         if(node == null)
             return false;
@@ -102,12 +103,12 @@ public class RBTImpl<T extends Comparable> {
      * @param node
      * right rotation, when the BF is positive >1 for the left heavy cases
      */
-    public RBTNode<T> rightRotation(RBTNode<T> node){
+    public RBTNode<Integer> rightRotation(RBTNode<Integer> node){
         System.out.println("doing right rotation : "+node.getData().toString());
         //this node going to the new root node
-        RBTNode<T> tempLeftChild = node.getLeftChild();
+        RBTNode<Integer> tempLeftChild = node.getLeftChild();
         //this node going to attach with current root nod Se of right
-        RBTNode<T> grandChild = tempLeftChild.getRightChild();
+        RBTNode<Integer> grandChild = tempLeftChild.getRightChild();
         //rotation happens here
         tempLeftChild.setRightChild(node);
         node.setLeftChild(grandChild);
@@ -131,12 +132,12 @@ public class RBTImpl<T extends Comparable> {
      * @param node
      * right rotation, when the BF is negative >-1 for the right heavy cases
      */
-    public RBTNode<T> leftRotation(RBTNode<T> node){
+    public RBTNode<Integer> leftRotation(RBTNode<Integer> node){
         System.out.println("doing left rotation : "+node.getData().toString());
         //this node going to the new root node
-        RBTNode<T> tempRightChild = node.getRightChild();
+        RBTNode<Integer> tempRightChild = node.getRightChild();
         //this node going to attach with current root node of right
-        RBTNode<T> grandChild = tempRightChild.getLeftChild();
+        RBTNode<Integer> grandChild = tempRightChild.getLeftChild();
         //rotation happens here
         tempRightChild.setLeftChild(node);
         node.setRightChild(grandChild);
@@ -161,7 +162,7 @@ public class RBTImpl<T extends Comparable> {
         inOrderTraversal(rootNode);
     }
 
-    private void inOrderTraversal(RBTNode<T> node) {
+    private void inOrderTraversal(RBTNode<Integer> node) {
         if(node == null) return;
         inOrderTraversal(node.getLeftChild());
         System.out.print(node.getData()+":"+node.getColor()+" ==> ");
