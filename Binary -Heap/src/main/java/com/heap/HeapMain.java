@@ -26,5 +26,9 @@ public class HeapMain {
             System.out.println(h.poll());
         }
 
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+        }
+
     }
 }
